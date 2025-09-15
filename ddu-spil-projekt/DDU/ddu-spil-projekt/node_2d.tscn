@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cike7ssnuaboq"]
+
+[ext_resource type="Script" uid="uid://8f7a617ydkos" path="res://player.gd" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://djw2b7kjrg5iv" path="res://pixilart-drawing.png" id="2_0e48y"]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_wtcfe")
+
+[node name="Pixilart-drawing" type="Sprite2D" parent="."]
+position = Vector2(-2, 2)
+texture = ExtResource("2_0e48y")

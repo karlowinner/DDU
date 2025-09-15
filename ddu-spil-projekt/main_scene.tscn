@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvr0ikfoks5u5"]
+
+[ext_resource type="PackedScene" uid="uid://cike7ssnuaboq" path="res://node_2d.tscn" id="1_2c62f"]
+[ext_resource type="PackedScene" uid="uid://csv0dyktyx3rg" path="res://area_2d.tscn" id="2_gyfs4"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_2c62f")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Area2D" parent="." instance=ExtResource("2_gyfs4")]
+position = Vector2(271, 97)
+collision_mask = 17

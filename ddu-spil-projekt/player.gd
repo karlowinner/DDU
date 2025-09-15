@@ -8,6 +8,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	look_at(get_global_mouse_position())
 	rotation=(get_global_mouse_position()-global_position).angle()+deg_to_rad(90) #rotated 90 degrees to point it to mouse position start position

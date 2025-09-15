@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://csv0dyktyx3rg"]
+
+[ext_resource type="Script" uid="uid://bhifnlb4e5wh3" path="res://coin.gd" id="1_dl81w"]
+[ext_resource type="Texture2D" uid="uid://yxeexokb2lq8" path="res://coin.png" id="2_dl81w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5rgpn"]
+radius = 46.0109
+
+[sub_resource type="Animation" id="Animation_c33a7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_c0nl8"]
+resource_name = "active"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_1dtnr"]
+resource_name = "destroy"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oqxq1"]
+_data = {
+&"RESET": SubResource("Animation_c33a7"),
+&"active": SubResource("Animation_c0nl8"),
+&"destroy": SubResource("Animation_1dtnr")
+}
+
+[node name="coin" type="Area2D"]
+position = Vector2(271, 98)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_dl81w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("2_dl81w")
+hframes = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 0.985443)
+shape = SubResource("CircleShape2D_5rgpn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_oqxq1")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
