@@ -1,0 +1,55 @@
+extends Sprite2D
+@onready var shoot_raycast=$"../shootraycast"
+
+@export var stop_distance=270
+@export var speed: float=100
+@export var area_min: Vector2=Vector2(0,1152)
+@export var area_max: Vector2=Vector2(300,520)
+
+@onready var ninja: CharacterBody2D=get_node("../../CharacterBody2D2ninja")
+@export var damage:int=5
+@export var damage_cooldown:float=1
+var time_since_last_hit:float=0
+@onready var Sprite2Dninja=$CharacterBody2D2ninja/Sprite2Dninja
+
+func _ready() -> void:
+	add_to_group("skibidiskyder")
+	var random_x =randf_range(area_min.x,area_max.x)
+	var random_y =randf_range(area_min.y,area_max.y)
+	position=Vector2(random_x,random_y)
+	#if shoot_raycast.is_colliding():
+	#	var collider =shoot_raycast.get_collider()
+	#	if collider == enemy:
+	#		collider.take_damage(5)
+		
+
+
+#func _process(delta: float) -> void:
+	#time_since_last_hit+=delta
+	
+#	if ninja:
+#		var direction=(ninja.global_position-global_position).normalized()
+#	#	print("direction",direction)
+#		position+=direction*speed*delta
+#		$".".rotation +=0.1
+		
+func _physics_process(delta: float) -> void:
+	time_since_last_hit+=delta
+
+	if not ninja:
+		return
+	var direction=(ninja.global_position-global_position).normalized()
+	var distance=direction.length()*(ninja.global_position-global_position).length()
+	var velocity=direction*speed*delta
+	if distance>stop_distance:
+		position+=direction*speed*delta
+		$".".rotation =(ninja.global_position-global_position).angle()
+		#position=Vector2.ZERO
+	else:
+		pass
+	#	velocity=0
+	#	print("direction",direction)
+		#position+=direction*speed*delta
+		#$".".rotation +=0.1
+
+		
