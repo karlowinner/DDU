@@ -1,0 +1,61 @@
+extends Node2D
+
+@export var speed: float=200.0
+
+@export var health_max: int = 100
+var health: int
+@onready var health_bar: ProgressBar = $"../CanvasLayer/healthbar"
+@onready var enemy: Node2D=$"../Node2D/Sprite2D3"
+@onready var shoot_raycast=$shootraycastdiddy
+
+func _ready() -> void:
+	health = health_max
+	health_bar.min_value = 0
+	health_bar.max_value = health_max
+	health_bar.value = health
+	print("healthbar:",health_bar)
+
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("shoot"):
+		if shoot_raycast.is_colliding():
+			var collider =shoot_raycast.get_collider()
+			if collider == enemy:
+				print("hit enemy")
+				collider.take_damage(5)
+
+
+func _physics_process(delta: float) -> void:
+	var input_vector= Vector2.ZERO
+	if Input.is_action_pressed("ui_right"):
+		input_vector.x += 1
+	if Input.is_action_pressed("ui_left"):
+		input_vector.x -= 1
+	if Input.is_action_pressed("ui_down"):
+		input_vector.y += 1
+	if Input.is_action_pressed("ui_up"):
+		input_vector.y -= 1
+	
+	#input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	#input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	
+	if input_vector!=Vector2.ZERO:
+		input_vector=input_vector.normalized()
+	
+	position+=delta*speed*input_vector
+
+func die()->void:
+	get_tree().change_scene_to_file("res://gameover.tscn")
+
+func take_damage(amount: int) -> void:
+	health -= amount
+	if health <= 0:
+		print("Player døde!")
+		die()
+	if health_bar:
+		health_bar.value = health
+		
+#func _on_hit_box_body_entered(body: Node2D) -> void:
+#	if body is enemy:
+#		died.emit()
+#		queue_free()
