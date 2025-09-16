@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://vfwistyvayop"]
+
+[ext_resource type="PackedScene" uid="uid://cike7ssnuaboq" path="res://node_2d.tscn" id="1_2c62f"]
+[ext_resource type="PackedScene" uid="uid://bxwx0kja5w7yf" path="res://projectile.tscn" id="2_d5x1h"]
+[ext_resource type="PackedScene" uid="uid://csv0dyktyx3rg" path="res://area_2d.tscn" id="2_gyfs4"]
+
+[node name="main_scene" type="Node2D"]
+
+[node name="coin" parent="." instance=ExtResource("2_gyfs4")]
+
+[node name="projectile" parent="." instance=ExtResource("2_d5x1h")]
+
+[node name="player" parent="." instance=ExtResource("1_2c62f")]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cike7ssnuaboq"]
+
+[ext_resource type="Script" uid="uid://8f7a617ydkos" path="res://player.gd" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://djw2b7kjrg5iv" path="res://pixilart-drawing.png" id="2_0e48y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0e48y"]
+radius = 102.0
+
+[node name="player" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_wtcfe")
+
+[node name="Pixilart-drawing" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(14, 4)
+scale = Vector2(10, 10)
+texture = ExtResource("2_0e48y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0e48y")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -1)
