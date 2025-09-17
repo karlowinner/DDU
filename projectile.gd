@@ -15,3 +15,7 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	global_position+=initial_velocity*delta
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	queue_free()
