@@ -1,0 +1,56 @@
+
+lav disse variabler:
+@export var area_min: Vector2=Vector2(30000,30002)
+@export var area_max: Vector2=Vector2(-200,0)
+
+@onready var enemy_temp:Sprite2D=$"."
+
+
+
+!!!!!!! tilføj til ready funktion
+ if self==enemy_temp:
+		spawn_loop()
+
+
+
+
+func _process(delta: float) -> void:
+	
+		time_since_last_hit+=delta
+	
+		if ninja:
+			var direction=(ninja.global_position-global_position).normalized()
+			position+=direction*speed*delta
+
+			if self!=enemy_temp and global_position.distance_to(ninja.position)<120:
+				if time_since_last_hit>=damage_cooldown:
+					ninja.take_damage(damage)
+					time_since_last_hit=0
+
+					queue_free()
+			
+			if global_position.distance_to(ninja.position)<120:
+				if time_since_last_hit>=damage_cooldown:
+					ninja.take_damage(damage)
+					time_since_last_hit=0
+
+					queue_free()
+
+
+func spawn_loop()-> void:
+	while true:
+		await get_tree().create_timer(spawn_interval).timeout
+		spawn_enemy()
+
+
+
+func spawn_enemy()-> void:
+	var new_enemy=enemy_temp.duplicate()
+	get_parent().add_child(new_enemy)
+	
+	new_enemy.ninja=ninja
+	
+	var random_x =randf_range(-200,1400)
+	var random_y =randf_range(-400,-600)
+	new_enemy.position=Vector2(random_x,random_y)
+	new_enemy.visible=true
