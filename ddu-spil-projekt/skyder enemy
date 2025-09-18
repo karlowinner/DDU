@@ -1,0 +1,37 @@
+extends Sprite2D
+
+
+@export var stop_distance=270
+@export var speed: float=240
+@export var area_min: Vector2=Vector2(0,1152)
+@export var area_max: Vector2=Vector2(300,520)
+@export var stop_margin=5
+@onready var ninja: CharacterBody2D=get_node("../../CharacterBody2D2ninja")
+@export var damage:int=5
+@export var damage_cooldown:float=1
+var time_since_last_hit:float=0
+@onready var Sprite2Dninja=$CharacterBody2D2ninja/Sprite2Dninja
+
+func _ready() -> void:
+	add_to_group("enemies")
+	var random_x =randf_range(area_min.x,area_max.x)
+	var random_y =randf_range(area_min.y,area_max.y)
+	position=Vector2(random_x,random_y)
+
+		
+func _physics_process(delta: float) -> void:
+	time_since_last_hit+=delta
+
+	if not ninja:
+		return
+	var direction=(ninja.global_position-global_position).normalized()
+	var distance=(ninja.global_position-global_position).length()
+	var velocity=direction*speed*delta
+	if distance<stop_distance-stop_margin:
+		
+		position-=direction*speed*delta
+	elif distance>stop_distance:
+		
+		position+=direction*speed*delta
+	rotation =(ninja.global_position-global_position).angle()
+
