@@ -1,0 +1,11 @@
+@export var origo:Vector2=Vector2(0,0)
+@export var radius:int=2500
+
+
+under physics proces: 
+	var posor=new_position-origo
+	if posor.length()>radius:
+		posor=posor.normalized()*radius
+		new_position=origo+posor
+		
+	position=new_position
