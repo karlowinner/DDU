@@ -1,0 +1,16 @@
+
+
+@export var spawn_interval:float=1
+
+@export var min_spawn_interval:=0.2
+@export var interval_decay=0.1
+
+func spawn_loop()-> void:
+
+	var current_interval=spawn_interval
+	
+	while true:
+		spawn_enemy()
+		await get_tree().create_timer(current_interval).timeout
+		
+		current_interval=max(min_spawn_interval,current_interval-interval_decay)
